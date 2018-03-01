@@ -13,7 +13,7 @@ $(document).ready(function(){
 
 	function simonTurn() {
 		simonArr.push(randomColor());
-		displayColor(); //need to write this still
+		displayArray(simonArr);
 	}
 	function randomColor() { //gets random color, pushes it to array.
 		var rando = Math.floor(Math.random()*4);
@@ -21,29 +21,39 @@ $(document).ready(function(){
 		return theColor;
 	}
 
-	function displayColor(array) {
+	function displayArray(array) {
+		console.log(array);
 		$.each(array, function(i, item){
-			$(item).addClass("light");
-		})
+			setTimeout(function(){
+				$("." + item).addClass("light")}, 500);
+			setTimeout(function(){
+				$("." + item).removeClass("light")}, 500);
+		});
 	}
-		//function that lights up squares
-		//function compares arrays and signals game end
-		//add random # to array
-		//display score
-
+	function displaySelection(val) {
+		$("." + val).addClass("light");
+		setTimeout(function(){
+			$("." + val).removeClass("light")}, 500);
+	}
 	function userTurn(val) {
 		myArr.push(val);
-		displayColor() //write this
-		if (areEqual) {
-			simonTurn();
-			displayScore() //write this
-		} else {
-			alert("Sorry, you have failed")
+		displaySelection(val);
+		if (myArr.length === simonArr.length) {
+			if (areEqual()) {
+				console.log(myArr);
+				myArr = [];
+				setTimeout(function(){
+				simonTurn()}, 1000); 
+				//displayScore() //write this
+			} else {
+				alert("Sorry, you have failed");
+			}
 		}
-	}
+	}//end userTurn
 	//function to compare arrays
 	var areEqual = function() {
-		if (simonArr[length] === myArr[length] && simonArr === simonArr ) {
+		if (JSON.stringify(myArr) === JSON.stringify(simonArr)) {
+			console.log(true);
 			return true;
 		} else {
 			return false;
