@@ -13,34 +13,32 @@ $(document).ready(function(){
 
 	function simonTurn() {
 		simonArr.push(randomColor());
-		displayArray(simonArr);
+		console.log(simonArr);
+		for (var i = 0; i < simonArr.length; i++) {
+			var item = simonArr[i];
+			timeOut(item)
+		}
+	function timeOut(item) {
+			setTimeout(function(){ 
+				displayColor(item)}, 1000*i);
+		}
+		
 	}
 	function randomColor() { //gets random color, pushes it to array.
 		var rando = Math.floor(Math.random()*4);
-		var theColor = colorArray[rando];
-		return theColor;
+		return colorArray[rando];
 	}
 
-	function displayArray(array) {
-		console.log(array);
-		$.each(array, function(i, item){
-			setTimeout(function(){
-				$("." + item).addClass("light")}, 500);
+	function displayColor(item) {
+			$("." + item).addClass("light");
 			setTimeout(function(){
 				$("." + item).removeClass("light")}, 500);
-		});
-	}
-	function displaySelection(val) {
-		$("." + val).addClass("light");
-		setTimeout(function(){
-			$("." + val).removeClass("light")}, 500);
 	}
 	function userTurn(val) {
 		myArr.push(val);
-		displaySelection(val);
+		displayColor(val);
 		if (myArr.length === simonArr.length) {
-			if (areEqual()) {
-				console.log(myArr);
+			if (areEqual) {
 				myArr = [];
 				setTimeout(function(){
 				simonTurn()}, 1000); 
@@ -53,7 +51,6 @@ $(document).ready(function(){
 	//function to compare arrays
 	var areEqual = function() {
 		if (JSON.stringify(myArr) === JSON.stringify(simonArr)) {
-			console.log(true);
 			return true;
 		} else {
 			return false;
