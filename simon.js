@@ -10,7 +10,7 @@ $(document).ready(function(){
 	var simonArr = [];
 	var myArr = [];
 	var colorArray = ["red", "blue", "green", "yellow"];
-
+	var count = 0;
 	function simonTurn() {
 		simonArr.push(randomColor());
 		// console.log(simonArr);
@@ -38,11 +38,13 @@ $(document).ready(function(){
 		console.log(myArr);
 		displayColor(val);
 		if (myArr.length === simonArr.length) {
-			if (areEqual()) {
+			if (JSON.stringify(myArr) === JSON.stringify(simonArr)) {
 				myArr = [];
 				setTimeout(function(){
 				simonTurn()}, 1000); 
-				//displayScore() //write this
+				count++
+				displayScore();
+
 			} else {
 				setTimeout(function(){
 				alert("Sorry, you have failed")}, 1000);
@@ -50,12 +52,8 @@ $(document).ready(function(){
 			}
 		}
 	}//end userTurn
-	function areEqual() {
-		if (JSON.stringify(myArr) === JSON.stringify(simonArr)) {
-			return true;
-		} else {
-			return false;
-		}
+	function displayScore() {
+		$("span").html(count);
 	}
 	function reset(){
 		simonArr = [];
