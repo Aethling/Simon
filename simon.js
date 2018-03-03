@@ -1,64 +1,73 @@
 $(document).ready(function(){
 	$(".square").on("click", function(){
-		var val = $(this).attr("value");
+		let val = $(this).attr("value");
 		userTurn(val);
 	});
 	$(".start").on("click", function(){
-		simonTurn();
-	}); //end start game
+		reset();
+		setTimeout(function(){simonTurn()}, 500);
+	});
+	$(".reset").on("click", function(){
+		reset();
+	})
 
-	var simonArr = [];
-	var myArr = [];
-	var colorArray = ["red", "blue", "green", "yellow"];
-	var count = 0;
+	const simonArr = [];
+	const playerArr = [];
+	const colorArray = ["red", "blue", "green", "yellow"];
+	let count = 0;
+
 	function simonTurn() {
 		simonArr.push(randomColor());
-		// console.log(simonArr);
-		for (var i = 0; i < simonArr.length; i++) {
-			var item = simonArr[i];
-			timeOut(item)
-		}
-	function timeOut(item) {
+		for (let i = 0; i < simonArr.length; i++) {
+			let item = simonArr[i];
 			setTimeout(function(){ 
-				displayColor(item)}, 1000*i);
+			displayColor(item)}, 700*i);
 		}
 	}
 	function randomColor() { //gets random color, pushes it to array.
-		var rando = Math.floor(Math.random()*4);
+		const rando = Math.floor(Math.random()*4);
 		return colorArray[rando];
 	}
 
 	function displayColor(item) {
 			$("." + item).addClass("light");
 			setTimeout(function(){
-				$("." + item).removeClass("light")}, 300);
+				$("." + item).removeClass("light")}, 350);
 	}
 	function userTurn(val) {
-		myArr.push(val);
-		console.log(myArr);
+		playerArr.push(val);
 		displayColor(val);
-		if (myArr.length === simonArr.length) {
-			if (JSON.stringify(myArr) === JSON.stringify(simonArr)) {
-				myArr = [];
-				setTimeout(function(){
-				simonTurn()}, 1000); 
+		if (playerArr.length === simonArr.length) {
+			if (JSON.stringify(playerArr) === JSON.stringify(simonArr)) {
 				count++
 				displayScore();
-
+				if (count === 2) {
+					youWin();
+				} else {
+				playerArr.length = 0;
+				setTimeout(function(){
+					simonTurn()}, 1000); 
+				}
 			} else {
 				setTimeout(function(){
-				alert("Sorry, you have failed")}, 1000);
-				reset();
+					alert("Sorry, you have failed")}, 500);
+					reset();
 			}
 		}
 	}//end userTurn
 	function displayScore() {
 		$("span").html(count);
 	}
-	function reset(){
-		simonArr = [];
-		myArr = [];
+	function youWin() {
+		$(".control").append('<h1 id="win">You Win!!</h1>')
+			.append('<h4>Press start to play again</4>');
 	}
-
+	function reset(){
+		simonArr.length = 0;
+		playerArr.length = 0;
+		count = 0;
+		$('#win').remove();
+		$('h4').remove();
+	}
 
 }) //end doc ready

@@ -56,3 +56,6 @@ body {
 .counter{
 	font-size: 26px;
 }
+.win {
+	color: red;
+}
