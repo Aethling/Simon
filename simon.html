@@ -8,6 +8,7 @@
   </head>
   <body>
     <h1>Simon</h1>
+    <h3>Try to reach 20 points!</h3>
     <div class="container">
       <div class="row">
         <div class="red square" type="button" value="red"></div>
@@ -21,10 +22,11 @@
   <div class="control">
     <button class="start">Start</button>
     <button class="reset">Reset</button>
-     <div class="custom-control custom-radio">
-        <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-        <label class="custom-control-label" for="customRadio1">Strict Mode</label>
-      </div>
+    <div class="strict">Strict Mode</div>
+      <label class="switch">
+        <input type="checkbox" id="myCheck" onclick="strictMode()">
+        <span class="slider round"></span>
+      </label>
     <h2>Count: <span class="counter">0</span></h2>
   </div>
   

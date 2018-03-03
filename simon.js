@@ -5,7 +5,7 @@ $(document).ready(function(){
 	});
 	$(".start").on("click", function(){
 		reset();
-		setTimeout(function(){simonTurn()}, 500);
+		setTimeout(function(){simonTurn()}, 300);
 	});
 	$(".reset").on("click", function(){
 		reset();
@@ -49,9 +49,7 @@ $(document).ready(function(){
 					simonTurn()}, 1000); 
 				}
 			} else {
-				setTimeout(function(){
-					alert("Sorry, you have failed")}, 500);
-					reset();
+				youFail();
 			}
 		}
 	}//end userTurn
@@ -62,11 +60,17 @@ $(document).ready(function(){
 		$(".control").append('<h1 id="win">You Win!!</h1>')
 			.append('<h4>Press start to play again</4>');
 	}
+	function youFail(){
+		setTimeout(function(){
+			$(".control").append('<h1 id="fail">You have failed</h1>')
+				.append('<h4>Press start to play again</4>')}, 500);
+	}
 	function reset(){
 		simonArr.length = 0;
 		playerArr.length = 0;
 		count = 0;
-		$('#win').remove();
+		displayScore();
+		$('#win, #fail').remove();
 		$('h4').remove();
 	}
 
