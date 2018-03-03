@@ -54,7 +54,7 @@ $(document).ready(function(){
 		}
 	}//end userTurn
 	function displayScore() {
-		$("span").html(count);
+		$("span.counter").html(count);
 	}
 	function youWin() {
 		$(".control").append('<h1 id="win">You Win!!</h1>')
