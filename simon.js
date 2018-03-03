@@ -5,10 +5,13 @@ $(document).ready(function(){
 	});
 	$(".start").on("click", function(){
 		reset();
+		simonArr.push(randomColor());
 		setTimeout(function(){simonTurn()}, 300);
+		
 	});
 	$(".reset").on("click", function(){
 		reset();
+		simonArr.push(randomColor());
 	})
 
 	const simonArr = [];
@@ -17,11 +20,10 @@ $(document).ready(function(){
 	let count = 0;
 
 	function simonTurn() {
-		simonArr.push(randomColor());
 		for (let i = 0; i < simonArr.length; i++) {
 			let item = simonArr[i];
 			setTimeout(function(){ 
-			displayColor(item)}, 700*i);
+				displayColor(item)}, 700*i);
 		}
 	}
 	function randomColor() { //gets random color, pushes it to array.
@@ -34,27 +36,60 @@ $(document).ready(function(){
 			setTimeout(function(){
 				$("." + item).removeClass("light")}, 350);
 	}
+	let secondTime = false;
 	function userTurn(val) {
 		playerArr.push(val);
 		displayColor(val);
-		if (playerArr.length === simonArr.length) {
-			if (JSON.stringify(playerArr) === JSON.stringify(simonArr)) {
-				count++
-				displayScore();
-				if (count === 2) {
-					youWin();
+		if (isValidMove()){
+			if (playerArr.length === simonArr.length) {
+				if (JSON.stringify(playerArr) === JSON.stringify(simonArr)) {
+					update();
+				} else if (strictMode() || secondTime == true){
+					youFail();
 				} else {
-				playerArr.length = 0;
-				setTimeout(function(){
-					simonTurn()}, 1000); 
-				}
-			} else {
+					playerArr.length = 0;
+					setTimeout(function(){
+						simonTurn()}, 2000);
+					secondTime = true
+					} 
+			}
+		} else {
+			//beep
+			if (strictMode() || secondTime == true){
 				youFail();
+			} else {
+				secondTime = true;
+				playerArr.length = 0;
+				simonTurn();
 			}
 		}
 	}//end userTurn
+	function strictMode() {
+		if ($("#myCheck").is(":checked")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	function update() {
+		count++
+		displayScore();
+		if (count === 20) {
+			youWin();
+		} else {
+		playerArr.length = 0;
+		simonArr.push(randomColor());
+		setTimeout(function(){
+			simonTurn()}, 1000); 
+		}
+	}
 	function displayScore() {
 		$("span.counter").html(count);
+	}
+	function isValidMove(){
+		for (let i = 0; i < playerArr.length; i++) {
+			return (playerArr[i] === simonArr[i]);
+		}
 	}
 	function youWin() {
 		$(".control").append('<h1 id="win">You Win!!</h1>')
@@ -69,6 +104,7 @@ $(document).ready(function(){
 		simonArr.length = 0;
 		playerArr.length = 0;
 		count = 0;
+		secondTime = false;
 		displayScore();
 		$('#win, #fail').remove();
 		$('h4').remove();
