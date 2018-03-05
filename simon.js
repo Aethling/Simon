@@ -18,6 +18,7 @@ $(document).ready(function(){
 	const blue = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3');
 	const green = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3');
 	const yellow = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3');
+	const error = new Audio("sounds/buttonerror.mp3");
 
 	const simonArr = [];
 	const playerArr = [];
@@ -43,16 +44,20 @@ $(document).ready(function(){
 				$("." + item).removeClass("light")}, 350);
 	}
 	function playBeep(item) {
+		if (item === error) {
+			error.load();
+			error.play();
+		} else {
 			var sound = eval(item);
 			sound.load();
 			sound.play();
-		
+		}	
 	}
 	let secondTime = false;
 	function userTurn(val) {
 		playerArr.push(val);
-		displayColor(val);
 		if (isValidMove()){
+			displayColor(val);
 			if (playerArr.length === simonArr.length) {
 				if (JSON.stringify(playerArr) === JSON.stringify(simonArr)) {
 					update();
@@ -66,22 +71,20 @@ $(document).ready(function(){
 					} 
 			}
 		} else {
-			//beep
+			playBeep(error);
 			if (strictMode() || secondTime == true){
 				youFail();
 			} else {
 				secondTime = true;
 				playerArr.length = 0;
-				simonTurn();
+				setTimeout(function(){
+					simonTurn();
+				}, 1000);
 			}
 		}
 	}//end userTurn
 	function strictMode() {
-		if ($("#myCheck").is(":checked")) {
-			return true;
-		} else {
-			return false;
-		}
+		return ($("#myCheck").is(":checked")) ? true:false;
 	}
 	function update() {
 		count++
@@ -100,18 +103,20 @@ $(document).ready(function(){
 	}
 	function isValidMove(){
 		for (let i = 0; i < playerArr.length; i++) {
-			return (playerArr[i] === simonArr[i]);
+			if (playerArr[i] !== simonArr[i]) {
+				return false
+			}
 		}
+			return true
 	}
 	function youWin() {
 		$(".control").append('<h1 id="win">You Win!!</h1>')
-			.append('<h4>Press start to play again</4>');
 	}
 	function youFail(){
 		setTimeout(function(){
-			$(".control").append('<h1 id="fail">You have failed</h1>')
-				.append('<h4 class="playAgain">Press start to play again</4>')}, 500);
-	}
+			$(".control").append('<h1 id="fail">You have failed.</h1>')
+	})
+	};
 	function reset(){
 		simonArr.length = 0;
 		playerArr.length = 0;
