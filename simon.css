@@ -114,3 +114,14 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+.strict{
+	display: inline-block;
+	position:  relative;
+	top: 36px;
+	left: 30px;
+}
+.stricty {
+	position: relative;
+	margin-top: 5px;
+	
+}

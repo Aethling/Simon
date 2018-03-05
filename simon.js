@@ -14,6 +14,11 @@ $(document).ready(function(){
 		simonArr.push(randomColor());
 	})
 
+	const red = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3");
+	const blue = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3');
+	const green = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3');
+	const yellow = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3');
+
 	const simonArr = [];
 	const playerArr = [];
 	const colorArray = ["red", "blue", "green", "yellow"];
@@ -26,15 +31,22 @@ $(document).ready(function(){
 				displayColor(item)}, 700*i);
 		}
 	}
-	function randomColor() { //gets random color, pushes it to array.
+	function randomColor() { //returns random color
 		const rando = Math.floor(Math.random()*4);
 		return colorArray[rando];
 	}
 
 	function displayColor(item) {
+			 playBeep(item);
 			$("." + item).addClass("light");
 			setTimeout(function(){
 				$("." + item).removeClass("light")}, 350);
+	}
+	function playBeep(item) {
+			var sound = eval(item);
+			sound.load();
+			sound.play();
+		
 	}
 	let secondTime = false;
 	function userTurn(val) {
@@ -98,7 +110,7 @@ $(document).ready(function(){
 	function youFail(){
 		setTimeout(function(){
 			$(".control").append('<h1 id="fail">You have failed</h1>')
-				.append('<h4>Press start to play again</4>')}, 500);
+				.append('<h4 class="playAgain">Press start to play again</4>')}, 500);
 	}
 	function reset(){
 		simonArr.length = 0;
@@ -107,7 +119,10 @@ $(document).ready(function(){
 		secondTime = false;
 		displayScore();
 		$('#win, #fail').remove();
-		$('h4').remove();
+		$('h4.playAgain').remove();
 	}
+
+
+
 
 }) //end doc ready
