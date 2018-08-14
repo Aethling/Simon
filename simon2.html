@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="simon2.css">
+    <title>Simon</title>
+  </head>
+  <body>
+    <h4>Try to reach 20 points!</h4>
+    <div class="container">
+      <div class="row topRow">
+        <div class="red square" type="button" value="red"></div>
+        <div class="blue square" type="button" value="blue"></div>
+      </div>
+
+      <div class="center"> 
+        <div class="control">
+          <h3>Simon</h3>
+          <div class="buttonRow1">
+            <div class="buttonContainer first">
+              <div class="count">
+                <span class="counter">0</span>
+              </div>
+              <span>count</span>
+            </div>
+
+            <div class="buttonContainer second">
+              <button class="start"></button>
+              <span>start</span>
+            </div>
+
+            <div class="buttonContainer third">
+              <button class="reset"></button>
+              <span>reset</span>
+            </div>
+          </div>
+
+          <div class="buttonRow2">
+            <div class="strict">
+                <label class="switch">
+                  <input type="checkbox" id="myCheck">
+                  <span class="slider round"></span>
+                </label>
+                <h4 class="stricty">Strict Mode</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row bottomRow">
+        <div class="green square" type="button" value="green"></div>
+        <div class="yellow square" type="button" value="yellow"></div>
+      </div>
+    </div>
+  
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="simon.js"></script>
+    
+  </body>
+</html>
