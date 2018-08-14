@@ -6,6 +6,9 @@
 body {
   text-align: center;
 }
+.welcome {
+  text-align: left;
+  font-size: 20pt;}
 .row {
   position: absolute;
   width: 700px;
@@ -71,6 +74,7 @@ body {
   background-color: red;
   border: 6px solid black;
   border-radius: 27px;
+  cursor: pointer;
  }
  
 .control h3 {
@@ -106,10 +110,10 @@ body {
   left: 20px;
 }
 .second {
-  display: inline;
-  position: relative;
-  top: 5px;
-  left: 15px;
+  position: absolute;
+  left: 125px;
+  width: 39px;
+  top: 7px;
 }
 .third {
   display: inline;
